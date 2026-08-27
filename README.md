@@ -1,59 +1,81 @@
-# PlaylistFrontend
+# Playlist Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.6.
+Aplicação Angular para gerenciamento de playlists musicais: criação e exclusão de playlists, além da inclusão de músicas em cada uma delas. O frontend consome uma API REST (backend Spring Boot + H2, executado separadamente) para persistir os dados.
 
-## Development server
+## Stack
 
-To start a local development server, run:
+- [Angular 22](https://angular.dev/) (standalone components, sem NgModules)
+- Angular zoneless (sem `zone.js` — atualizações de view fora de bindings automáticos exigem `ChangeDetectorRef.detectChanges()` manual)
+- TypeScript 6
+- RxJS
+- [Vitest](https://vitest.dev/) para testes unitários
 
-```bash
-ng serve
-```
+## Pré-requisitos
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Node.js compatível com Angular 22
+- npm (o projeto fixa `packageManager: npm@11.19.0`)
+- Backend da API rodando (ver [Configuração da API](#configuração-da-api))
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Instalação
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
+## Configuração da API
 
-To build the project run:
+A URL base da API é definida diretamente em [`src/app/services/playlist.ts`](src/app/services/playlist.ts):
+
+```ts
+private readonly apiUrl = 'http://localhost:8080/lists';
+```
+
+Ajuste esse valor para apontar para o backend correto antes de rodar a aplicação. As requisições enviam autenticação HTTP Basic fixa (`quipux.admin`) definida no mesmo arquivo.
+
+## Rodando em desenvolvimento
 
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Abra `http://localhost:4200/` no navegador. A aplicação recarrega automaticamente a cada alteração nos arquivos-fonte.
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Build
 
 ```bash
-ng test
+npm run build
 ```
 
-## Running end-to-end tests
+Os artefatos de build são gerados em `dist/`.
 
-For end-to-end (e2e) testing, run:
+## Testes
 
 ```bash
-ng e2e
+npm test
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Executa os testes unitários com Vitest.
 
-## Additional Resources
+## Estrutura do projeto
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```text
+src/app/
+├── components/
+│   ├── form-playlist/     # Formulário de criação de playlist
+│   ├── lista-playlists/   # Listagem, exclusão de playlists e inclusão de músicas
+│   └── mensagem/          # Componente de mensagem de sucesso/erro (auto-esconde após 1s)
+├── models/
+│   └── playlist.model.ts  # Interfaces Playlist e Musica
+├── services/
+│   └── playlist.ts        # Client HTTP para a API de playlists
+├── app.config.ts          # Providers da aplicação (router, HttpClient)
+└── app.routes.ts
+```
+
+## Funcionalidades
+
+- **Criar playlist** — nome e descrição, via [`FormPlaylist`](src/app/components/form-playlist/form-playlist.ts).
+- **Listar playlists** — carregadas ao iniciar e recarregadas após qualquer alteração.
+- **Excluir playlist**.
+- **Adicionar música** a uma playlist existente (título, artista, álbum, ano, gênero).
+- **Feedback visual** — mensagens de sucesso/erro exibidas via o componente `app-mensagem`, somem automaticamente após 1 segundo.
