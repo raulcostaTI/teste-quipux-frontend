@@ -1,0 +1,36 @@
+<div class="container">
+  <h2>Nova Playlist</h2>
+
+  <form (ngSubmit)="criar()">
+    <div class="campo">
+      <label for="nome">Nome</label>
+      <input
+        id="nome"
+        type="text"
+        [(ngModel)]="nome"
+        name="nome"
+        required
+      />
+    </div>
+
+    <div class="campo">
+      <label for="descricao">Descrição</label>
+      <input
+        id="descricao"
+        type="text"
+        [(ngModel)]="descricao"
+        name="descricao"
+      />
+    </div>
+
+    <button type="submit">Criar</button>
+  </form>
+
+  @if (sucesso) {
+    <p class="sucesso">{{ sucesso }}</p>
+  }
+
+  @if (erro) {
+    <p class="erro">{{ erro }}</p>
+  }
+</div>

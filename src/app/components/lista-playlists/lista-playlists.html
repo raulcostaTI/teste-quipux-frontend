@@ -1,0 +1,23 @@
+<div class="container">
+  <h2>Playlists</h2>
+  @if (erro) {
+    <p class="erro">{{ erro }}</p>
+  }
+
+  @if (playlists.length === 0 && !erro) {
+    <p>Nenhuma playlist cadastrada ainda.</p>
+  }
+
+  <ul class="lista">
+    @for (playlist of playlists; track playlist.id) {
+      <li class="item">
+        <div class="info">
+          <strong>{{ playlist.nome }}</strong>
+          <p>{{ playlist['descrição'] }}</p>
+          <small>{{ playlist['músicas'].length }} música(s)</small>
+        </div>
+        <button (click)="apagar(playlist.nome)">Apagar</button>
+      </li>
+    }
+  </ul>
+</div>

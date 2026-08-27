@@ -1,12 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { ListaPlaylists } from './components/lista-playlists/lista-playlists';
+import { FormPlaylist } from './components/form-playlist/form-playlist';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.css',
+  imports: [ListaPlaylists, FormPlaylist],
   templateUrl: './app.html',
+  styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('playlist-frontend');
+  protected title = 'playlist-frontend';
 }
