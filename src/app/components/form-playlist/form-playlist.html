@@ -27,10 +27,10 @@
   </form>
 
   @if (sucesso) {
-    <p class="sucesso">{{ sucesso }}</p>
+    <app-mensagem tipo="success">{{ sucesso }}</app-mensagem>
   }
 
   @if (erro) {
-    <p class="erro">{{ erro }}</p>
+    <app-mensagem tipo="error">{{ erro }}</app-mensagem>
   }
 </div>

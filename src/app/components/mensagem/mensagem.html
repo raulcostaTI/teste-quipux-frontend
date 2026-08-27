@@ -1,0 +1,10 @@
+<div class="mensagem" [class.success]="tipo === 'success'" [class.error]="tipo === 'error'">
+  <span class="icone">
+    @if (tipo === 'success') {
+      ✓
+    } @else {
+      ✕
+    }
+  </span>
+  <span class="texto"><ng-content /></span>
+</div>

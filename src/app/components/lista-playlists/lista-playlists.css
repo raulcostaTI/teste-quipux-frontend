@@ -66,3 +66,7 @@ button {
   background-color: #5cb85c;
   padding: 8px 16px;
 }
+
+app-mensagem {
+  display: block;
+}

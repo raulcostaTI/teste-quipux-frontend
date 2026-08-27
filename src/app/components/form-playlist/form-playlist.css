@@ -30,10 +30,6 @@ button {
   cursor: pointer;
 }
 
-.sucesso {
-  color: green;
-}
-
-.erro {
-  color: red;
+app-mensagem {
+  display: block;
 }

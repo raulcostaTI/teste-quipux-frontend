@@ -1,10 +1,11 @@
 <div class="container">
   <h2>Playlists</h2>
-  @if (erro) {
-    <p class="erro">{{ erro }}</p>
+
+  @if (message) {
+    <app-mensagem [tipo]="messageType === 'error' ? 'error' : 'success'">{{ message }}</app-mensagem>
   }
 
-  @if (playlists.length === 0 && !erro) {
+  @if (playlists.length === 0 && !message) {
     <p>Nenhuma playlist cadastrada ainda.</p>
   }
 
