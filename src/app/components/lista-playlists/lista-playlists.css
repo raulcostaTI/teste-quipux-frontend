@@ -1,5 +1,5 @@
 .container {
-  max-width: 600px;
+  max-width: 700px;
   margin: 20px auto;
   font-family: Arial, sans-serif;
 }
@@ -11,12 +11,38 @@
 
 .item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 10px;
   border: 1px solid #ddd;
   padding: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   border-radius: 6px;
+}
+
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.musicas {
+  margin: 0;
+  padding-left: 18px;
+  color: #444;
+  font-size: 14px;
+}
+
+.form-musica {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.form-musica input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .erro {
@@ -24,10 +50,19 @@
 }
 
 button {
-  background-color: #d9534f;
   color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.apagar {
+  background-color: #d9534f;
+}
+
+.adicionar {
+  grid-column: 1 / -1;
+  background-color: #5cb85c;
+  padding: 8px 16px;
 }

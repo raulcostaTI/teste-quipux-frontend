@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Playlist } from '../models/playlist.model';
+import { Musica, Playlist } from '../models/playlist.model';
 
 @Injectable({
   providedIn: 'root',
@@ -33,5 +33,13 @@ export class PlaylistService {
     return this.http.delete<void>(`${this.apiUrl}/${encodeURIComponent(nome)}`, {
       headers: this.headers,
     });
+  }
+
+  adicionarMusica(nomePlaylist: string, musica: Musica): Observable<Playlist> {
+    return this.http.post<Playlist>(
+      `${this.apiUrl}/${encodeURIComponent(nomePlaylist)}/musicas`,
+      musica,
+      { headers: this.headers },
+    );
   }
 }

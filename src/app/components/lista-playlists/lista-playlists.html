@@ -11,12 +11,36 @@
   <ul class="lista">
     @for (playlist of playlists; track playlist.id) {
       <li class="item">
-        <div class="info">
-          <strong>{{ playlist.nome }}</strong>
-          <p>{{ playlist['descrição'] }}</p>
-          <small>{{ playlist['músicas'].length }} música(s)</small>
+        <div class="cabecalho">
+          <div class="info">
+            <strong>{{ playlist.nome }}</strong>
+            <p>{{ playlist['descrição'] }}</p>
+            <small>{{ playlist['músicas'].length }} música(s)</small>
+          </div>
+          <button class="apagar" type="button" (click)="apagar(playlist.nome)">Apagar</button>
         </div>
-        <button (click)="apagar(playlist.nome)">Apagar</button>
+
+        @if (playlist['músicas'].length > 0) {
+          <ul class="musicas">
+            @for (musica of playlist['músicas']; track musica.id) {
+              <li>
+                {{ musica.titulo }}
+                @if (musica.artista) {
+                  — {{ musica.artista }}
+                }
+              </li>
+            }
+          </ul>
+        }
+
+        <form class="form-musica" (ngSubmit)="adicionarMusica(playlist.nome)">
+          <input [(ngModel)]="formularios[playlist.nome].titulo" name="titulo-{{ playlist.id }}" placeholder="Título" required />
+          <input [(ngModel)]="formularios[playlist.nome].artista" name="artista-{{ playlist.id }}" placeholder="Artista" />
+          <input [(ngModel)]="formularios[playlist.nome].album" name="album-{{ playlist.id }}" placeholder="Álbum" />
+          <input [(ngModel)]="formularios[playlist.nome].ano" name="ano-{{ playlist.id }}" placeholder="Ano" />
+          <input [(ngModel)]="formularios[playlist.nome].genero" name="genero-{{ playlist.id }}" placeholder="Gênero" />
+          <button class="adicionar" type="submit">Incluir música</button>
+        </form>
       </li>
     }
   </ul>
