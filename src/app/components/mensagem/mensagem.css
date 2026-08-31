@@ -8,6 +8,10 @@
   border-left: 4px solid transparent;
   font-size: 14px;
   animation: entrar 0.2s ease-out;
+  overflow: hidden;
+  max-height: 60px;
+  opacity: 1;
+  transition: max-height 0.35s ease, margin 0.35s ease, padding 0.35s ease, opacity 0.35s ease;
 }
 
 .icone {
@@ -46,6 +50,14 @@
 .mensagem.error .icone {
   background: #d9534f;
   color: #fff;
+}
+
+.mensagem.saindo {
+  opacity: 0;
+  max-height: 0;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 @keyframes entrar {

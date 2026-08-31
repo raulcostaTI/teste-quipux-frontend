@@ -1,51 +1,93 @@
-<div class="container">
-  <h2>Playlists</h2>
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="logo">🎵 Quipux teste</div>
 
-  @if (message) {
-    <app-mensagem [tipo]="messageType === 'error' ? 'error' : 'success'">{{ message }}</app-mensagem>
-  }
+    <input
+      class="busca"
+      type="text"
+      placeholder="Pesquisar playlists..."
+      [(ngModel)]="termoPesquisa"
+      (ngModelChange)="pesquisar()"
+    />
 
-  @if (playlists.length === 0 && !message) {
-    <p>Nenhuma playlist cadastrada ainda.</p>
-  }
+    <form class="form-nova-playlist" (ngSubmit)="criarPlaylist()">
+      <input [(ngModel)]="novoNome" name="novoNome" placeholder="Nome da nova playlist" required />
+      <input [(ngModel)]="novaDescricao" name="novaDescricao" placeholder="Descrição" />
+      <button type="submit">+ Nova Playlist</button>
+    </form>
 
-  <ul class="lista">
-    @for (playlist of playlists; track playlist.id) {
-      <li class="item">
-        <div class="cabecalho">
-          <div class="info">
-            <strong>{{ playlist.nome }}</strong>
-            <p>{{ playlist['descrição'] }}</p>
-            <small>{{ playlist['músicas'].length }} música(s)</small>
-          </div>
-          <button class="apagar" type="button" (click)="apagar(playlist.nome)">Apagar</button>
-        </div>
+    <p class="titulo-secao">PLAYLISTS</p>
 
-        @if (playlist['músicas'].length > 0) {
-          <ul class="musicas">
-            @for (musica of playlist['músicas']; track musica.id) {
-              <li>
-        <span>
-          {{ musica.titulo }}
-          @if (musica.artista) {
-            — {{ musica.artista }}
-          }
-        </span>
-                <button class="remover-musica" type="button" (click)="removerMusica(playlist.nome, musica.id)">✕</button>
-              </li>
-            }
-          </ul>
-        }
+    <ul class="lista-sidebar">
+      @for (playlist of playlists; track playlist.id) {
+        <li
+          class="item-sidebar"
+          [class.ativo]="playlistSelecionada?.id === playlist.id"
+          (click)="selecionarPlaylist(playlist)"
+        >
+          {{ playlist.nome }}
+        </li>
+      }
+    </ul>
+  </aside>
 
-        <form class="form-musica" (ngSubmit)="adicionarMusica(playlist.nome)">
-          <input [(ngModel)]="formularios[playlist.nome].titulo" name="titulo-{{ playlist.id }}" placeholder="Título" required />
-          <input [(ngModel)]="formularios[playlist.nome].artista" name="artista-{{ playlist.id }}" placeholder="Artista" />
-          <input [(ngModel)]="formularios[playlist.nome].album" name="album-{{ playlist.id }}" placeholder="Álbum" />
-          <input [(ngModel)]="formularios[playlist.nome].ano" name="ano-{{ playlist.id }}" placeholder="Ano" />
-          <input [(ngModel)]="formularios[playlist.nome].genero" name="genero-{{ playlist.id }}" placeholder="Gênero" />
-          <button class="adicionar" type="submit">Incluir música</button>
-        </form>
-      </li>
+  <main class="conteudo">
+    @if (message) {
+      <app-mensagem [tipo]="messageType === 'error' ? 'error' : 'success'">{{ message }}</app-mensagem>
     }
-  </ul>
+
+    @if (!playlistSelecionada) {
+      <div class="vazio">
+        <span class="vazio-icone">🎧</span>
+        <p>Selecione uma playlist ao lado,<br>ou crie uma nova para começar.</p>
+      </div>
+    }
+     @else {
+      <div class="cabecalho-playlist">
+        <div>
+          <h1>{{ playlistSelecionada.nome }}</h1>
+          <p>{{ playlistSelecionada['descrição'] }} • {{ playlistSelecionada['músicas'].length }} música(s)</p>
+        </div>
+        <button class="botao-excluir" type="button" (click)="apagar(playlistSelecionada.nome)">Excluir Playlist</button>
+      </div>
+
+      <table class="tabela-musicas">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Título</th>
+          <th>Artista</th>
+          <th>Álbum</th>
+          <th>Ano</th>
+          <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (musica of playlistSelecionada['músicas']; track musica.id; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ musica.titulo }}</td>
+              <td>{{ musica.artista }}</td>
+              <td>{{ musica.album }}</td>
+              <td>{{ musica.ano }}</td>
+              <td>
+                <button class="botao-remover" type="button" (click)="removerMusica(playlistSelecionada.nome, musica.id)">
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <form class="form-musica" (ngSubmit)="adicionarMusica(playlistSelecionada.nome)">
+        <input [(ngModel)]="formularios[playlistSelecionada.nome].titulo" name="titulo" placeholder="Título" required />
+        <input [(ngModel)]="formularios[playlistSelecionada.nome].artista" name="artista" placeholder="Artista" />
+        <input [(ngModel)]="formularios[playlistSelecionada.nome].album" name="album" placeholder="Álbum" />
+        <input [(ngModel)]="formularios[playlistSelecionada.nome].ano" name="ano" placeholder="Ano" />
+        <input [(ngModel)]="formularios[playlistSelecionada.nome].genero" name="genero" placeholder="Gênero" />
+        <button class="botao-adicionar" type="submit">+ Adicionar Música</button>
+      </form>
+    }
+  </main>
 </div>

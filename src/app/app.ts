@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { ListaPlaylists } from './components/lista-playlists/lista-playlists';
-import { FormPlaylist } from './components/form-playlist/form-playlist';
 
 @Component({
   selector: 'app-root',
-  imports: [ListaPlaylists, FormPlaylist],
+  imports: [ListaPlaylists],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

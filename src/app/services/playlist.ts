@@ -19,8 +19,9 @@ export class PlaylistService {
     return this.http.post<Playlist>(this.apiUrl, playlist, { headers: this.headers });
   }
 
-  listarTodas(): Observable<Playlist[]> {
-    return this.http.get<Playlist[]>(this.apiUrl, { headers: this.headers });
+  listarTodas(nome?: string): Observable<Playlist[]> {
+    const url = nome ? `${this.apiUrl}?nome=${encodeURIComponent(nome)}` : this.apiUrl;
+    return this.http.get<Playlist[]>(url, { headers: this.headers });
   }
 
   buscarPorNome(nome: string): Observable<Playlist> {
@@ -35,13 +36,11 @@ export class PlaylistService {
     });
   }
 
-  // adiciona uma música a uma playlist existente
   adicionarMusica(nomePlaylist: string, musica: Musica): Observable<Playlist> {
     const url = `${this.apiUrl}/${encodeURIComponent(nomePlaylist)}/musicas`;
     return this.http.post<Playlist>(url, musica, { headers: this.headers });
   }
 
-  // remove uma música específica de uma playlist
   removerMusica(nomePlaylist: string, musicaId: number): Observable<Playlist> {
     const url = `${this.apiUrl}/${encodeURIComponent(nomePlaylist)}/musicas/${musicaId}`;
     return this.http.delete<Playlist>(url, { headers: this.headers });
