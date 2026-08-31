@@ -70,3 +70,25 @@ button {
 app-mensagem {
   display: block;
 }
+
+.musicas li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.remover-musica {
+  background: transparent;
+  border: none;
+  color: #d9534f;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 2px 8px;
+}
+
+.remover-musica:hover {
+  background-color: #fdecea;
+  border-radius: 4px;
+}
+

@@ -79,6 +79,27 @@ export class ListaPlaylists implements OnInit {
     });
   }
 
+  removerMusica(nomePlaylist: string, musicaId: number | undefined): void {
+    if (musicaId === undefined) {
+      return;
+    }
+
+    this.playlistService.removerMusica(nomePlaylist, musicaId).subscribe({
+      next: () => {
+        this.message = 'Música removida com sucesso!';
+        this.messageType = 'success';
+        this.limparMensagem();
+        this.carregarPlaylists();
+      },
+      error: (err) => {
+        this.message = err.error || 'Erro ao remover música.';
+        this.messageType = 'error';
+        this.limparMensagem();
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
   apagar(nome: string): void {
     this.playlistService.deletarPorNome(nome).subscribe({
       next: () => {

@@ -25,10 +25,13 @@
           <ul class="musicas">
             @for (musica of playlist['músicas']; track musica.id) {
               <li>
-                {{ musica.titulo }}
-                @if (musica.artista) {
-                  — {{ musica.artista }}
-                }
+        <span>
+          {{ musica.titulo }}
+          @if (musica.artista) {
+            — {{ musica.artista }}
+          }
+        </span>
+                <button class="remover-musica" type="button" (click)="removerMusica(playlist.nome, musica.id)">✕</button>
               </li>
             }
           </ul>
